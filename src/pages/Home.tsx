@@ -1,6 +1,8 @@
 const Home = () => {
     return(
-        <h1>Welcome to Felix Bnb!</h1>
+        <div>
+            <h1 className="fixed top-20 left-0 w-full text-3xl font-bold text-center" >Welcome to Felix Bnb!</h1>
+        </div>
     )
 }
 
