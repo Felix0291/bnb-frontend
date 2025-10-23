@@ -5,20 +5,23 @@ import Properties from './pages/Properties'
 import Login from './pages/Login'
 import Booking from './pages/Booking'
 import PropertyDetails from './pages/PropertyDetails'
+import MyPage from './pages/MyPage'
+import { AuthProvider } from './context/AuthContext'
 
 function App() {
-
-
   return (
-    <div>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/properties' element={<Properties />}/>
-        <Route path='/login' element={<Login />}/>
-        <Route path='/booking' element = {<Booking />}/>
-        <Route path='/propertydetails' element= {<PropertyDetails />}/>
-      </Routes>
-    </div>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path="/mypage" element={<MyPage />}/>
+          <Route path='/properties' element={<Properties />}/>
+          <Route path='/login' element={<Login />}/>
+          <Route path='/booking' element={<Booking />}/>
+          <Route path='/propertydetails' element={<PropertyDetails />}/>
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   )
 }
 
