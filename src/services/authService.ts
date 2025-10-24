@@ -10,7 +10,6 @@ class AuthService {
         this.userUrl = `${this.baseUrl}/users`
     }
 
-
     private getAuthHeaders() {
         const token = localStorage.getItem("access_token");
         return {
@@ -44,6 +43,12 @@ class AuthService {
     }
     
     async getUser() {
+        const token = localStorage.getItem("access_token");
+        
+        if (!token) {
+            return null;
+        }
+        
         const url = `${this.userUrl}/me`  
         const response = await fetch(url, {
             method: "GET",
@@ -60,22 +65,16 @@ class AuthService {
         }
         return response.json()
     }
-
-    async adminLogin(email: string, password: string) {
-        const url = `${this.authUrl}/loginAdmin`
+    async logout() {
+        const url = `${this.authUrl}/logout`;
         return await fetch(url, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: "include",
-            body: JSON.stringify({email, password})
-        })
+            headers: this.getAuthHeaders(),
+            credentials: "include"
+        });
     }
 }
 
 export default new AuthService;
-
-
 
 

@@ -1,17 +1,16 @@
 
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    const { login, adminLogin } = useAuth();
+    const { login } = useAuth(); 
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,11 +18,11 @@ const Login = () => {
         setError("")
 
         try {
-            if (isAdmin) {
-                await adminLogin(email, password);
-            } else {
-                await login(email, password);
-            }
+           
+            await login(email, password);
+
+            console.log("Användare loggade in:", email);
+
             navigate("/mypage")
         } catch (err) {
             setError(err instanceof Error ? err.message : "Login failed")
@@ -31,7 +30,8 @@ const Login = () => {
             setLoading(false)
         }
     }
-     return(
+
+    return(
         <div className="flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
                 <div>
@@ -41,7 +41,7 @@ const Login = () => {
                 </div>
 
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    <div className="rounded-md shadow-sm  space-y-1 ">
+                    <div className="rounded-md shadow-sm space-y-1">
                         <div>
                             <label htmlFor="email" className="sr-only">
                                 Email
@@ -74,21 +74,6 @@ const Login = () => {
                             />
                         </div>
                     </div>
-                    
-                    {/* Admin checkbox */}
-                    <div className="flex items-center">
-                        <input
-                            id="isAdmin"
-                            name="isAdmin"
-                            type="checkbox"
-                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                            checked={isAdmin}
-                            onChange={(e) => setIsAdmin(e.target.checked)}
-                        />
-                        <label htmlFor="isAdmin" className="ml-2 block text-sm text-gray-900">
-                            Logga in som admin
-                        </label>
-                    </div>
 
                     {error && (
                         <div className="text-red-600 text-sm text-center">
@@ -113,7 +98,6 @@ const Login = () => {
                         </p>
                     </div>
                 </form>
-
             </div>
         </div>
     )

@@ -6,7 +6,6 @@ interface AuthContextType {
     user: User | null;
     loading: boolean;
     login: (email: string, password: string) => Promise<void>;
-    adminLogin: (email: string, password: string) => Promise<void>;
     logout: () => void;
     isAuthenticated: boolean;
     isAdmin: boolean;
@@ -65,6 +64,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
             if (data.expires_at) {
                 localStorage.setItem("expires_at", data.expires_at.toString())
             }
+            
             if (data.admin_token) {
                 localStorage.setItem("admin_token", data.admin_token)
             }
@@ -76,51 +76,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         }
     }
 
-    const adminLogin = async (email: string, password: string) => {
+    const logout = async () => {
         try {
-            const response = await authService.adminLogin(email, password);
-
-            if (!response.ok) {
-                const errorData = await response.json()
-                throw new Error(errorData.error || "Failed to login as admin")
-            }
-
-            const data = await response.json();
-      
-            // Spara tokens
-            if (data.access_token) {
-              localStorage.setItem('access_token', data.access_token);
-            }
-            if (data.refresh_token) {
-              localStorage.setItem('refresh_token', data.refresh_token);
-            }
-            if (data.expires_at) {
-              localStorage.setItem('expires_at', data.expires_at.toString());
-            }
-            if (data.admin_token) {
-              localStorage.setItem('admin_token', data.admin_token);
-            }
-
-            const userData = await authService.getUser()
-            setUser(userData?.user || null)
-        } catch (err) {
-            throw err
+            await authService.logout();
+        } catch (error) {
+            console.error('Logout error:', error);
+        } finally {
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            localStorage.removeItem("expires_at");
+            localStorage.removeItem("admin_token");
+            setUser(null);
         }
-    }
-
-    const logout = () => {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token")
-        localStorage.removeItem("expires_at");
-        localStorage.removeItem("admin_token")
-        setUser(null)
     }
     
     const value: AuthContextType = {
         user,
         loading, 
         login,
-        adminLogin,
         logout,
         isAuthenticated: !!user,
         isAdmin: !!localStorage.getItem("admin_token")
