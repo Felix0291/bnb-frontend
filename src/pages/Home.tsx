@@ -33,13 +33,13 @@ const Home = () => {
 
     return (
         <div>
-            <h1 className="left-0 w-full text-3xl font-bold text-center">Properties:</h1>
-            <div className="pt-24">
-                <div className="grid grid-cols-5 grid-rows-5 gap-4">
+            <h2 className="left-0 w-full text-xl pt-20 font-bold text-center ">Boende uthyrning:</h2>
+            <div className="pt-10">
+                <div className="grid grid-cols-4  grid-rows-5 gap-4">
                     {properties.map((property) => (
                         <div 
                             key={property.id} 
-                            className="mb-4 p-4 border rounded"
+                            className="mb-4 p-4 border-black rounded border-2"
                         >
                             <img src={property.imgUrl} alt={property.name} className="w-full h-48 object-cover rounded mb-2" />
                             <h3 className="font-bold">{property.name}</h3>
