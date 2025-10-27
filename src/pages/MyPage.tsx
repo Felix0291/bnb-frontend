@@ -4,7 +4,7 @@ import propertyService from '../services/PropertyService';
 import { useAuth } from '../context/AuthContext';
 
 const MyPage = () => {  
-    const { user, isAuthenticated, loading: authLoading } = useAuth();
+    const { user, isAuthenticated } = useAuth();
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
