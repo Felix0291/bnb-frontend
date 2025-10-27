@@ -1,10 +1,10 @@
 // src/pages/MyPage.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import propertyService from '../services/PropertyService';
 import { useAuth } from '../context/AuthContext';
 
 const MyPage = () => {  
-    const { user, isAuthenticated } = useAuth();
+    const { user, isAuthenticated, loading: authLoading } = useAuth();
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
@@ -14,6 +14,24 @@ const MyPage = () => {
     const [properties, setProperties] = useState<NewProperty[]>([])
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [loadingProperties, setLoadingProperties] = useState(false);
+
+    useEffect(() => {
+        const fetchUserProperties = async () => {
+            if (!user?.id) return;
+            setLoadingProperties(true)
+            try {
+                const userProperties = await propertyService.getPropertiesByUserId(user.id);
+                setProperties(userProperties)
+            } catch (err) {
+                console.error("Error fetch inge user properties", err)
+                setError("Could not get your properties")
+            } finally {
+                setLoadingProperties(false);
+            }
+        }
+        fetchUserProperties()
+    },[user?.id])
 
     const handleSubmit = async (e: React.FormEvent) => { 
         e.preventDefault()
@@ -79,8 +97,40 @@ const MyPage = () => {
                 </div>
             )}
             
+            {loadingProperties ? (
+                <div className="text-center mb-8">
+                    <p>Laddar dina properties...</p>
+                </div>
+            ) : properties.length > 0 ? (
+                <div className="mb-8">
+                    <h2 className="text-xl font-semibold mb-4">Mina Properties ({properties.length})</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {properties.map((property) => (
+                            <div key={property.id || property.name} className="bg-white p-4 rounded-lg shadow-md">
+                                {property.imgUrl && (
+                                    <img src={property.imgUrl} alt={property.name} className="w-full h-48 object-cover rounded mb-2" />
+                                )}
+                                <h3 className="font-bold text-lg">{property.name}</h3>
+                                <p className="text-gray-600">{property.location}</p>
+                                <p className="text-green-600 font-semibold">{property.pricePerNight} kr/natt</p>
+                                <p className="text-sm text-gray-500">{property.description}</p>
+                                <span className={`inline-block px-2 py-1 rounded text-xs mt-2 ${
+                                    property.availability ? 'bg-green-100 textTurkish-800' : 'bg-redviz-100 text-red-800'
+                                }`}>
+                                    {property.availability ? 'Tillgänglig' : 'Inte tillgänglig'}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ) : (
+                <div className="text-center text-gray-500 mb-8">
+                    <p>Du har inga properties än. Skapa en nedan!</p>
+                </div>
+            )}
+
             <div className="max-w-lg mx-auto bg-white p-6 rounded-lg">
-                <h2 className="text-xl font-semibold mb-4">Skapa ny property</h2>
+                <h2 className="text-xl font-semibold mb-4">Skapa ny egendom</h2>
                 
                 <form onSubmit={handleSubmit} className="m-8 space-y-4">
                     <div>
@@ -162,6 +212,8 @@ const MyPage = () => {
                     </button>
                 </form>
             </div>
+
+            
 
             {/* Visa skapade properties */}
             {properties.length > 0 && (

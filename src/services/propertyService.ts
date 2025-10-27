@@ -48,6 +48,23 @@ class PropertyService {
         return response.json();
     }
 
+
+    async getPropertiesByUserId(userId: string) {
+        const url = `${this.propertyUrl}?user_id=${userId}`     
+        const response = await fetch(url, {
+            method: "GET",
+            headers: this.getAuthHeaders(),
+            credentials: "include"
+        })
+
+        if (!response.ok) {
+            throw new Error("Faild to fetch user properties")
+        }
+        
+        const data = await response.json();
+        return data;
+    }
+
    async createProperty(property: NewProperty) {
     const url = `${this.propertyUrl}`;
     const response = await fetch(url, {
