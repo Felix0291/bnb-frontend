@@ -36,20 +36,17 @@ const Home = () => {
         <div>
             <h2 className="left-0 w-full text-xl pt-20 font-bold text-center ">Boende uthyrning:</h2>
             <div className="pt-10">
-                <Link to="/propertydetails">
-                <div className="grid grid-cols-4  grid-rows-5 gap-4">
+                <div className="grid grid-cols-4 gap-4">
                     {properties.map((property) => (
-                        <div
-                            key={property.id} 
-                            className="mb-4 p-4 border-black rounded shadow"
-                        >
-                            <img src={property.imgUrl} alt={property.name} className="w-full h-48 object-cover rounded mb-2" />
-                            <h3 className="font-bold">{property.name}</h3>
-                            <p className="text-lg">{property.pricePerNight} kr/natt</p>
-                        </div>
+                        <Link key={property.id} to={`/propertydetails/${property.id}`}>
+                            <div className="mb-4 p-4 border-black rounded shadow">
+                                <img src={property.imgUrl} alt={property.name} className="w-full h-48 object-cover rounded mb-2" />
+                                <h3 className="font-bold">{property.name}</h3>
+                                <p className="text-lg">{property.pricePerNight} kr/natt</p>
+                            </div>
+                        </Link>
                     ))}
                 </div>
-                </Link>
             </div>
         </div>
     );

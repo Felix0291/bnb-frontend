@@ -18,7 +18,7 @@ function App() {
           <Route path="/mypage" element={<MyPage />}/>
           <Route path='/login' element={<Login />}/>
           <Route path='/booking' element={<Booking />}/>
-          <Route path='/propertydetails' element={<PropertyDetails />}/>
+          <Route path='/propertydetails/:id' element={<PropertyDetails />}/>
         </Routes>
       </AuthProvider>
     </BrowserRouter>
