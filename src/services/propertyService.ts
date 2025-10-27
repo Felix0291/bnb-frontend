@@ -18,6 +18,7 @@ class PropertyService {
         };
     }
 
+    //Hämta alla properties
     async getAllProperties() {
         const url = `${this.propertyUrl}`;
         const response = await fetch(url, {
@@ -33,6 +34,7 @@ class PropertyService {
         return response.json();
     }
 
+    //Hämta ett specifikt property på id
     async getPropertiesById(id: string) {
         const url = `${this.propertyUrl}/${id}`;
         const response = await fetch(url, {
@@ -48,7 +50,7 @@ class PropertyService {
         return response.json();
     }
 
-
+    //Hämta alla properties på en användare (som användaren man är inloggad som har skapat (på mypage))
     async getPropertiesByUserId(userId: string) {
         const url = `${this.propertyUrl}?user_id=${userId}`     
         const response = await fetch(url, {
@@ -65,6 +67,7 @@ class PropertyService {
         return data;
     }
 
+    //Skapa ett nytt property
    async createProperty(property: NewProperty) {
     const url = `${this.propertyUrl}`;
     const response = await fetch(url, {
@@ -80,6 +83,22 @@ class PropertyService {
     }
 
     return response.json()
-}
+    }
+
+    //Uppdatera ett property
+    async updateProperty(property: Property) {
+        const url = `${this.propertyUrl}/${property.id}`
+        const response = await fetch(url, {
+            method: "PUT",
+            headers: this.getAuthHeaders(),
+            credentials: "include",
+            body: JSON.stringify(property)
+        })
+
+        if (!response.ok) {
+            throw new Error("Faild to update property")
+        }
+        return response.json()
+    }
 }
 export default new PropertyService();
