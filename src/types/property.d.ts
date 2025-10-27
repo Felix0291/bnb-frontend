@@ -27,3 +27,4 @@ type PropertyListQuery = {
     q?: string;
     sort_by?: "name" | "location" | string;
 }
+

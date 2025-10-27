@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import PropertyService from '../services/PropertyService';
 import { useParams } from 'react-router-dom';
 
+
 interface Property {
     id: string;
     name: string;
@@ -39,18 +40,18 @@ const PropertyDetails = () => {
         <div>
             {propertyById && (
                 
-                <div className="bg-green-50" key={propertyById.id}>
+                <div className=" w-full" key={propertyById.id}>
                     <div>
-                    <img className="w-96 h-auto" src={propertyById.imgUrl} alt={propertyById.name} />
-                    
+                    <img className="w-[900px] rounded-xl" src={propertyById.imgUrl} alt={propertyById.name} />  
                 </div>
-                <div className=''>
-                <h2>{propertyById.name}</h2>
-                <p>{propertyById.location}</p>
+                <div className=' -ml-[1px] flex-1 space y-4 mt-10 text-left'>
+                <h2 className='text-xl font-bold'>{propertyById.name} {propertyById.location}</h2>
                 <p>{propertyById.description}</p>
-                <p>{propertyById.pricePerNight}</p>
-                <button className='text-white'>Boka nu!</button>
+                <p className="">{propertyById.pricePerNight} SEK</p>
             </div>
+            
+            <button className='ml-[600px] -mt-[200px] text-white'>Boka nu!</button>
+            
             </div>
                 
             )}
