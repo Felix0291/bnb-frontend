@@ -89,7 +89,7 @@ class PropertyService {
     async updateProperty(property: Property) {
         const url = `${this.propertyUrl}/${property.id}`
         const response = await fetch(url, {
-            method: "PUT",
+            method: "PATCH",
             headers: this.getAuthHeaders(),
             credentials: "include",
             body: JSON.stringify(property)
@@ -97,6 +97,20 @@ class PropertyService {
 
         if (!response.ok) {
             throw new Error("Faild to update property")
+        }
+        return response.json()
+    }
+
+    async deleteProperty(id: string) {
+        const url = `${this.propertyUrl}/${id}`
+        const response = await fetch(url, {
+            method: "DELETE",
+            headers: this.getAuthHeaders(),
+            credentials: "include"
+        })
+
+        if (!response.ok) {
+            throw new Error("Failed to detelte property")
         }
         return response.json()
     }

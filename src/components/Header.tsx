@@ -2,7 +2,6 @@
 import OpenHouseImg from "../assets/openHouseImg.png"
 import { Link } from "react-router-dom";
 import UserMenu from "./UserMenu";
-import { ImManWoman } from "react-icons/im";
 
 
 
