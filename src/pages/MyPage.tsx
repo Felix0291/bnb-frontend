@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import propertyService from '../services/PropertyService';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const MyPage = () => {  
-    const { user, isAuthenticated } = useAuth();
+    const { user, isAuthenticated, logout } = useAuth();
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
@@ -15,6 +16,7 @@ const MyPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [loadingProperties, setLoadingProperties] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserProperties = async () => {
@@ -88,8 +90,19 @@ const MyPage = () => {
 
     return(
         <div className="p-8">
+        <div className="flex justify-between items-center mb-4">
             <h1>Min sida</h1>
-            <p className="text-center text-gray-600 mb-4">Inloggad som: {user?.email}</p>
+            <button
+                onClick={() => {
+                    logout();
+                    navigate("/");
+                }}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+            >
+                Logga ut
+            </button>
+        </div>
+        <p className="text-center text-gray-600 mb-4">Inloggad som: {user?.email}</p>
             
             {error && (
                 <div className="max-w-md mx-auto mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
