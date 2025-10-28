@@ -2,6 +2,7 @@
 import OpenHouseImg from "../assets/openHouseImg.png"
 import { Link } from "react-router-dom";
 import UserMenu from "./UserMenu";
+import { ImManWoman } from "react-icons/im";
 
 
 
@@ -14,7 +15,8 @@ const Header = () => {
             <Link to="/">
             <img className="w-[80px] rounded-xl ml-4" src={OpenHouseImg} alt="" />
             </Link>
-            <div className="mr-5">
+            
+            <div className="ml-auto mr-5">
                 <UserMenu />
             </div>
         </div>

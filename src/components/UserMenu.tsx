@@ -1,7 +1,7 @@
 
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
-import { ImManWoman } from "react-icons/im";
+
 
 
 const UserMenu = () => {
@@ -20,7 +20,7 @@ const UserMenu = () => {
     return(
         <Link
         to="/login"
-        className="px-4 py-2 bg-darkblue text-white rounded hover:bg-blue-600 transition">
+        className="px-4 py-2 bg-darkblue text-black rounded hover:bg-blue-600 transition">
             Logga in
         </Link>
     )
