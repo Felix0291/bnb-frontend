@@ -86,7 +86,7 @@ const MyPage = () => {
 
     const handleDelete = async (propertyId: string, propertyName: string) => {
         if (!window.confirm(`Är du säker på att du vill ta bort "${propertyName}"? Det går inte att ångra`)) {
-            return;
+            
         }
 
         setLoading(true);
