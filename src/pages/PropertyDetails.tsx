@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropertyService from '../services/PropertyService';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 
 interface Property {
@@ -36,21 +36,28 @@ const PropertyDetails = () => {
      
     return(
         <div>
-        <h1 className="fixed top-20 left-0 w-full text-3xl font-bold text-center" >Propertydetails:</h1>
+        {/* <h1 className="fixed top-20 left-0 w-full text-3xl font-bold text-center" >Propertydetails:</h1> */}
+        
         <div>
+            
             {propertyById && (
                 
                 <div className=" w-full" key={propertyById.id}>
+                    
                     <div>
+                    <h2 className='-ml-[1px] flex-1 space y-4 mt-10 text-left text-xl font-bold'>{propertyById.name}</h2>
                     <img className="w-[900px] rounded-xl" src={propertyById.imgUrl} alt={propertyById.name} />  
                 </div>
+                
                 <div className=' -ml-[1px] flex-1 space y-4 mt-10 text-left'>
-                <h2 className='text-xl font-bold'>{propertyById.name} {propertyById.location}</h2>
+                <h2 className='text-xl font-bold'>{propertyById.location}</h2>
                 <p>{propertyById.description}</p>
-                <p className="">{propertyById.pricePerNight} SEK</p>
+                <p className="">{propertyById.pricePerNight} SEK / Kväll</p>
             </div>
             
+            <Link to={"/booking"}>
             <button className='ml-[600px] -mt-[200px] text-white'>Boka nu!</button>
+            </Link>
             
             </div>
                 
