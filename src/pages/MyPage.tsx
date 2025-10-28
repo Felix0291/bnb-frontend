@@ -101,28 +101,30 @@ const MyPage = () => {
                 <div className="text-center mb-8">
                     <p>Laddar dina properties...</p>
                 </div>
-            ) : properties.length > 0 ? (
-                <div className="mb-8">
-                    <h2 className="text-xl font-semibold mb-4">Mina Properties ({properties.length})</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {properties.map((property) => (
-                            <div key={property.id || property.name} className="bg-white p-4 rounded-lg shadow-md">
-                                {property.imgUrl && (
-                                    <img src={property.imgUrl} alt={property.name} className="w-full h-48 object-cover rounded mb-2" />
-                                )}
-                                <h3 className="font-bold text-lg">{property.name}</h3>
-                                <p className="text-gray-600">{property.location}</p>
-                                <p className="text-green-600 font-semibold">{property.pricePerNight} kr/natt</p>
-                                <p className="text-sm text-gray-500">{property.description}</p>
-                                <span className={`inline-block px-2 py-1 rounded text-xs mt-2 ${
-                                    property.availability ? 'bg-green-100 textTurkish-800' : 'bg-redviz-100 text-red-800'
-                                }`}>
-                                    {property.availability ? 'Tillgänglig' : 'Inte tillgänglig'}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
+
+        ) : properties.length > 0 ? (
+            <div className="mb-8">
+                <h2 className="text-xl font-semibold mb-4">Mina Properties ({properties.length})</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+                    {properties.map((property) => (
+                        <div key={property.id || property.name} className="bg-white p-3 rounded-lg shadow-md">
+                            {property.imgUrl && (
+                                <img src={property.imgUrl} alt={property.name} className="w-full h-32 object-cover rounded mb-2" />
+                            )}
+                            <h3 className="font-bold text-base">{property.name}</h3>
+                            <p className="text-gray-600 text-sm">{property.location}</p>
+                            <p className="text-green-600 font-semibold text-sm">{property.pricePerNight} kr/natt</p>
+                            <p className="text-xs text-gray-500 line-clamp-2">{property.description}</p>
+                            <span className={`inline-block px-2 py-1 rounded text-xs mt-2 ${
+                                property.availability ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                            }`}>
+                                {property.availability ? 'Tillgänglig' : 'Inte tillgänglig'}
+                            </span>
+                        </div>
+                    ))}
                 </div>
+            </div>
+
             ) : (
                 <div className="text-center text-gray-500 mb-8">
                     <p>Du har inga properties än. Skapa en nedan!</p>
@@ -212,33 +214,6 @@ const MyPage = () => {
                     </button>
                 </form>
             </div>
-
-            
-
-            {/* Visa skapade properties */}
-            {properties.length > 0 && (
-                <div className="mt-8">
-                    <h2 className="text-xl font-semibold mb-4">Mina Properties ({properties.length})</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {properties.map((property, index) => (
-                            <div key={index} className="bg-white p-4 rounded-lg shadow-md">
-                                {property.imgUrl && (
-                                    <img src={property.imgUrl} alt={property.name} className="w-full h-48 object-cover rounded mb-2" />
-                                )}
-                                <h3 className="font-bold text-lg">{property.name}</h3>
-                                <p className="text-gray-600">{property.location}</p>
-                                <p className="text-green-600 font-semibold">{property.pricePerNight} kr/natt</p>
-                                <p className="text-sm text-gray-500">{property.description}</p>
-                                <span className={`inline-block px-2 py-1 rounded text-xs ${
-                                    property.availability ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                                }`}>
-                                    {property.availability ? 'Tillgänglig' : 'Inte tillgänglig'}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
         </div>
     )
 }

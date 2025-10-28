@@ -30,7 +30,7 @@ class AuthService {
         })
     }
 
-    async registrer(email: string, password: string, name?: string) {
+    async registerUser(email: string, password: string, name?: string) {
         let url = `${this.authUrl}/register`
         return await fetch(url, {
             method: "POST",
