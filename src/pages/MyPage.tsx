@@ -23,7 +23,7 @@ const MyPage = () => {
     const [editingPropertyId, setEditingPropertyId] = useState<string | null>(null);
     const [bookings, setBookings] = useState<NewBooking[]>([]);
     const [loadingBookings, setLoadingBookings] = useState(false)
-    const [editBooking, setEditBooking] = useState<string | null>(null); 
+    const [editBooking, setEditBooking] = useState<string | null>(null);
     const [isEditMode, setIsEditMode] = useState(false);
     const formRef = useRef<HTMLDivElement>(null)
 
@@ -46,42 +46,42 @@ const MyPage = () => {
         fetchUserProperties()
     }, [user?.id])
 
-    // useEffect(() => {
-    //     const loadAllProps = async () => {
-    //         try {
-    //             const all = await propertyService.getAllProperties()
-    //             const map: Record<string, Property> = {};
-    //             all.forEach((p: Property) => {map[p.id] = p; })
-    //             setPropertyMap(map)
-    //         } catch (err) {
-    //             console.error("Kunde inte hämta properties", err)
-    //         }
-    //     }
-    //     loadAllProps()
+    useEffect(() => {
+        const loadAllProps = async () => {
+            try {
+                const all = await propertyService.getAllProperties()
+                const map: Record<string, Property> = {};
+                all.forEach((p: Property) => { map[p.id] = p; })
+                setPropertyMap(map)
+            } catch (err) {
+                console.error("Kunde inte hämta properties", err)
+            }
+        }
+        loadAllProps()
 
-    // }, [])
-    
-    // useEffect(() => {
-    //     const fetchUserBookings = async () => {
-    //         if (!user?.id) return;
-    //         setLoadingBookings(true);
-    //         try {
-    //             const allBookings = await bookingService.getBookingsByUserId(user.id);
-    //             // Fallback if backend inte filtrerar:
-    //             const onlyMine = Array.isArray(allBookings)
-    //                 ? allBookings.filter(b => b.user_id === user.id)
-    //                 : [];
-    //             setBookings(onlyMine);
-    //         } catch (err) {
-    //             console.error("Error med att hämta bookings", err);
-    //             setError("Kunde inte hämta bookings");
-    //         } finally {
-    //             setLoadingBookings(false);
-    //         }
-    //     };
-    
-    //     fetchUserBookings();
-    // }, [user?.id]);
+    }, [])
+
+    useEffect(() => {
+        const fetchUserBookings = async () => {
+            if (!user?.id) return;
+            setLoadingBookings(true);
+            try {
+                const allBookings = await bookingService.getBookingsByUserId(user.id);
+                // Fallback if backend inte filtrerar:
+                const onlyMine = Array.isArray(allBookings)
+                    ? allBookings.filter(b => b.user_id === user.id)
+                    : [];
+                setBookings(onlyMine);
+            } catch (err) {
+                console.error("Error med att hämta bookings", err);
+                setError("Kunde inte hämta bookings");
+            } finally {
+                setLoadingBookings(false);
+            }
+        };
+
+        fetchUserBookings();
+    }, [user?.id]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -104,7 +104,7 @@ const MyPage = () => {
                     id: editingPropertyId
                 } as Property)
 
-                setProperties(properties.map(p => 
+                setProperties(properties.map(p =>
                     p.id === editingPropertyId ? updatedProperty : p
                 ));
                 setIsEditMode(false);
@@ -130,7 +130,7 @@ const MyPage = () => {
 
     const handleDelete = async (propertyId: string, propertyName: string) => {
         if (!window.confirm(`Är du säker på att du vill ta bort "${propertyName}"? Det går inte att ångra`)) {
-            
+
         }
 
         setLoading(true);
@@ -155,7 +155,7 @@ const MyPage = () => {
         } finally {
             setLoading(false)
         }
-    } 
+    }
 
     if (!isAuthenticated) {
         return (
@@ -219,7 +219,7 @@ const MyPage = () => {
                                     }`}>
                                     {property.availability ? 'Tillgänglig' : 'Inte tillgänglig'}
                                 </span>
-                                <button 
+                                <button
                                     onClick={() => {
                                         const p = property as Property;
                                         setEditingPropertyId(p.id);
@@ -239,14 +239,14 @@ const MyPage = () => {
                                         }, 100)
                                     }}
                                     className="mt-2 w-full px-3 py-1 text-white rounded hover:bg-black transition text-xs">
-                                        Redigera
+                                    Redigera
                                 </button>
                                 <button
                                     onClick={() => handleDelete(property.id!, property.name)}
                                     className="mt-2 w-full px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition text-xs"
                                     disabled={loading}
-                                    >
-                                        Ta bort
+                                >
+                                    Ta bort
                                 </button>
                             </div>
                         ))}
@@ -258,38 +258,38 @@ const MyPage = () => {
                     <p>Du har inga properties än. Skapa en nedan!</p>
                 </div>
             )}
-            
 
-            {/* {loadingBookings ? (
-    <div className='text-center mb-8'>
-        <p>Laddar dina Bookings</p>
-    </div>
-) : bookings.length > 0 ? (
-    <div className='mb-8'>
-        <h2 className='text-xl font-semibold mb-4'>Mina bokningar ({bookings.length})</h2>
-        
-        <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3'>
-            {bookings.map((booking) => (
-                <div key={booking.id} className="bg-white p-3 rounded-lg shadow-md">
-                    <h3 className="font-bold text-base">Bokning</h3>
-                    {propertyMap[booking.property_id]?.imgUrl && (
-    <img
-        src={propertyMap[booking.property_id].imgUrl!}
-        alt={propertyMap[booking.property_id].name}
-        className="w-full h-32 object-cover rounded mb-2"
-    />
-)}
-<p className="font-semibold text-sm">
-    {propertyMap[booking.property_id]?.name || "Laddar..."}
-</p>
-                    <p className="text-sm text-gray-600">Incheckning: {new Date(booking.check_in_date).toLocaleDateString()}</p>
-                    <p className="text-sm text-gray-600">Utcheckning: {new Date(booking.check_out_date).toLocaleDateString()}</p>
+
+            {loadingBookings ? (
+                <div className='text-center mb-8'>
+                    <p>Laddar dina Bookings</p>
                 </div>
-            ))}
-            
-        </div>
-    </div>
-) : null} */}
+            ) : bookings.length > 0 ? (
+                <div className='mb-8'>
+                    <h2 className='text-xl font-semibold mb-4'>Mina bokningar ({bookings.length})</h2>
+
+                    <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3'>
+                        {bookings.map((booking) => (
+                            <div key={booking.id} className="bg-white p-3 rounded-lg shadow-md">
+                                <h3 className="font-bold text-base">Bokning</h3>
+                                {propertyMap[booking.property_id]?.imgUrl && (
+                                    <img
+                                        src={propertyMap[booking.property_id].imgUrl!}
+                                        alt={propertyMap[booking.property_id].name}
+                                        className="w-full h-32 object-cover rounded mb-2"
+                                    />
+                                )}
+                                <p className="font-semibold text-sm">
+                                    {propertyMap[booking.property_id]?.name || "Laddar..."}
+                                </p>
+                                <p className="text-sm text-gray-600">Incheckning: {new Date(booking.check_in_date).toLocaleDateString()}</p>
+                                <p className="text-sm text-gray-600">Utcheckning: {new Date(booking.check_out_date).toLocaleDateString()}</p>
+                            </div>
+                        ))}
+
+                    </div>
+                </div>
+            ) : null}
 
             <div ref={formRef} className="max-w-lg mx-auto bg-white p-6 rounded-lg">
                 <h2 className="text-xl font-semibold mb-4">{isEditMode ? "Redigera egendom" : "Skapa ny egendom"}</h2>
@@ -365,24 +365,24 @@ const MyPage = () => {
                         </label>
                     </div>
 
-                        {isEditMode && (
-                            <button
-                                type='button'
-                                onClick={() => {
-                                    setIsEditMode(false);
-                                    setEditingPropertyId(null);
-                                    setName("");
-                                    setDescription("");
-                                    setLocation("");
-                                    setPricePerNight("");
-                                    setAvailability(true);
-                                    setImgUrl("");
-                                }}
-                                className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 mb-2"
-                                >
-                                    Avbryt redigering
-                            </button>
-                        )}
+                    {isEditMode && (
+                        <button
+                            type='button'
+                            onClick={() => {
+                                setIsEditMode(false);
+                                setEditingPropertyId(null);
+                                setName("");
+                                setDescription("");
+                                setLocation("");
+                                setPricePerNight("");
+                                setAvailability(true);
+                                setImgUrl("");
+                            }}
+                            className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 mb-2"
+                        >
+                            Avbryt redigering
+                        </button>
+                    )}
 
                     <button
                         type="submit"
