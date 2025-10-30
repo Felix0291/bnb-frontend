@@ -99,17 +99,24 @@ class BookingService {
     }
 
     async deleteBooking(id: string) {
-        const url = `${this.bookingUrl}/${id}`
+        const url = `${this.bookingUrl}/${id}`;
         const response = await fetch(url, {
             method: "DELETE",
             headers: this.getAuthHeaders(),
-            credentials: "include"
-        })
-
+            credentials: "include",
+        });
+    
         if (!response.ok) {
-            throw new Error("Failed to delete booking")
+            throw new Error("Failed to delete booking");
         }
-        return response.json()
+    
+        if (response.status === 204) return null;
+    
+        try {
+            return await response.json();
+        } catch {
+            return null;
+        }
     }
 
 }
