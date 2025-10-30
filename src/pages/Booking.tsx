@@ -41,7 +41,7 @@ const Booking = () => {
 
     const handleBooking = async () => {
         if (!checkIn || !checkOut || !propertyId || !user?.id) {
-            setError("Välj datum för att fortsätta!")
+            setError("Välj datum för att fortsätta!");
         }
 
         setLoading(true);
@@ -67,6 +67,8 @@ const Booking = () => {
         } finally {
             setLoading(false);
         }
+
+    
 
     }
 
@@ -192,24 +194,22 @@ const Booking = () => {
                              />
                         </div>
                     </div>
-                </div>
-
+                    </div>
+                    
                     {error && (
                         <div className='mt-4 text-red-600 text-sm max-w-md'>
                             {error}
                         </div>
                     )}
-                    
+
                     {isDateSelected && (
                         <button
-                        
-                        onClick={handleBooking}
-                        disabled={loading || !isDateSelected}
-                        className='mt-6 w-full py-3 bg-black text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed font-semibold'
-                    >
-                        {loading ? "Bokar..." : (isDateSelected ? "Boka hotel" : "Välj datum för att boka")}
-                    </button>
-                        
+                            onClick={handleBooking}
+                            disabled={loading}
+                            className='mt-6 w-full py-3 bg-black text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed font-semibold'
+                            >
+                                {loading ? "Bokar..." : "Boka hotel"}
+                        </button>
                     )}
                 </div>
         </div>
