@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-import PropertyService from '../services/PropertyService';
+import propertyService from "../services/propertyService";
 import bookingService from '../services/bookingService';
 
 
@@ -17,6 +17,7 @@ const Booking = () => {
     const [checkIn, setCheckIn] = useState<string>("");
     const [checkOut, setCheckOut] = useState<string>("");
     const [loading, setLoading] = useState(false);
+    const [availability, setAvailability] = useState(true);
     const [error, setError] = useState("")
 
 
@@ -28,7 +29,7 @@ const Booking = () => {
 
         const fetchProperty = async () => {
             try {
-                const data = await PropertyService.getPropertiesById(propertyId);
+                const data = await propertyService.getPropertiesById(propertyId);
                 setProperty(data);
             } catch (err) {
                 console.error("Faild to fetch property", err)
@@ -59,7 +60,10 @@ const Booking = () => {
 
             navigate("/mypage", {state: {bookingSuccess: true}})
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Kunde inte skapa booking")
+            const msg = err instanceof Error ? err.message : "Kunde inte skapa bokning";
+            setError(msg.toLowerCase().includes("inte tillgängligt") || msg.toLowerCase().includes("not available")
+                ? "Boendet är inte tillgängligt för dessa datum."
+                : msg);
         } finally {
             setLoading(false);
         }
@@ -189,15 +193,23 @@ const Booking = () => {
                         </div>
                     </div>
                 </div>
+
+                    {error && (
+                        <div className='mt-4 text-red-600 text-sm max-w-md'>
+                            {error}
+                        </div>
+                    )}
                     
                     {isDateSelected && (
                         <button
-                            onClick={handleBooking}
-                            disabled={loading}
-                            className='mt-6 w-full py-3 bg-black text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed font-semibold'
-                            >
-                                {loading ? "Bokar..." : "Boka hotel"}
-                        </button>
+                        
+                        onClick={handleBooking}
+                        disabled={loading || !isDateSelected}
+                        className='mt-6 w-full py-3 bg-black text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed font-semibold'
+                    >
+                        {loading ? "Bokar..." : (isDateSelected ? "Boka hotel" : "Välj datum för att boka")}
+                    </button>
+                        
                     )}
                 </div>
         </div>

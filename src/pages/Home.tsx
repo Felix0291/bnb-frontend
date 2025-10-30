@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import propertyService from "../services/PropertyService";
+import propertyService from "../services/propertyService";
 import { Link } from "react-router-dom";
 
 interface Property {

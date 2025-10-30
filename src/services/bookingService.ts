@@ -74,7 +74,11 @@ class BookingService {
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.message || `HTTP error! status: ${response.status}`)
+            const status = response.status;
+            const backendMessage = errorData.message;
+            let message = backendMessage || `HTTP error! status: ${status}`;
+            if (status === 409) message = "Denna bostad är inte tillgänglig";
+            throw new Error(message);
         }
         return response.json()
     }

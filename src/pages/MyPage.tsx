@@ -1,8 +1,11 @@
 // src/pages/MyPage.tsx
 import React, { useEffect, useRef, useState } from 'react';
-import propertyService from '../services/PropertyService';
+import propertyService from "../services/propertyService";
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { IoReturnDownBack } from 'react-icons/io5';
+import bookingService from '../services/bookingService';
+
 
 const MyPage = () => {
     const { user, isAuthenticated, logout } = useAuth();
@@ -15,8 +18,12 @@ const MyPage = () => {
     const [properties, setProperties] = useState<NewProperty[]>([])
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [propertyMap, setPropertyMap] = useState<Record<string, Property>>({})
     const [loadingProperties, setLoadingProperties] = useState(false);
     const [editingPropertyId, setEditingPropertyId] = useState<string | null>(null);
+    const [bookings, setBookings] = useState<NewBooking[]>([]);
+    const [loadingBookings, setLoadingBookings] = useState(false)
+    const [editBooking, setEditBooking] = useState<string | null>(null); 
     const [isEditMode, setIsEditMode] = useState(false);
     const formRef = useRef<HTMLDivElement>(null)
 
@@ -38,6 +45,43 @@ const MyPage = () => {
         }
         fetchUserProperties()
     }, [user?.id])
+
+    // useEffect(() => {
+    //     const loadAllProps = async () => {
+    //         try {
+    //             const all = await propertyService.getAllProperties()
+    //             const map: Record<string, Property> = {};
+    //             all.forEach((p: Property) => {map[p.id] = p; })
+    //             setPropertyMap(map)
+    //         } catch (err) {
+    //             console.error("Kunde inte hämta properties", err)
+    //         }
+    //     }
+    //     loadAllProps()
+
+    // }, [])
+    
+    // useEffect(() => {
+    //     const fetchUserBookings = async () => {
+    //         if (!user?.id) return;
+    //         setLoadingBookings(true);
+    //         try {
+    //             const allBookings = await bookingService.getBookingsByUserId(user.id);
+    //             // Fallback if backend inte filtrerar:
+    //             const onlyMine = Array.isArray(allBookings)
+    //                 ? allBookings.filter(b => b.user_id === user.id)
+    //                 : [];
+    //             setBookings(onlyMine);
+    //         } catch (err) {
+    //             console.error("Error med att hämta bookings", err);
+    //             setError("Kunde inte hämta bookings");
+    //         } finally {
+    //             setLoadingBookings(false);
+    //         }
+    //     };
+    
+    //     fetchUserBookings();
+    // }, [user?.id]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -214,6 +258,38 @@ const MyPage = () => {
                     <p>Du har inga properties än. Skapa en nedan!</p>
                 </div>
             )}
+            
+
+            {/* {loadingBookings ? (
+    <div className='text-center mb-8'>
+        <p>Laddar dina Bookings</p>
+    </div>
+) : bookings.length > 0 ? (
+    <div className='mb-8'>
+        <h2 className='text-xl font-semibold mb-4'>Mina bokningar ({bookings.length})</h2>
+        
+        <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3'>
+            {bookings.map((booking) => (
+                <div key={booking.id} className="bg-white p-3 rounded-lg shadow-md">
+                    <h3 className="font-bold text-base">Bokning</h3>
+                    {propertyMap[booking.property_id]?.imgUrl && (
+    <img
+        src={propertyMap[booking.property_id].imgUrl!}
+        alt={propertyMap[booking.property_id].name}
+        className="w-full h-32 object-cover rounded mb-2"
+    />
+)}
+<p className="font-semibold text-sm">
+    {propertyMap[booking.property_id]?.name || "Laddar..."}
+</p>
+                    <p className="text-sm text-gray-600">Incheckning: {new Date(booking.check_in_date).toLocaleDateString()}</p>
+                    <p className="text-sm text-gray-600">Utcheckning: {new Date(booking.check_out_date).toLocaleDateString()}</p>
+                </div>
+            ))}
+            
+        </div>
+    </div>
+) : null} */}
 
             <div ref={formRef} className="max-w-lg mx-auto bg-white p-6 rounded-lg">
                 <h2 className="text-xl font-semibold mb-4">{isEditMode ? "Redigera egendom" : "Skapa ny egendom"}</h2>
