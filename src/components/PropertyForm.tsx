@@ -6,7 +6,7 @@ type PropertyFormProps = {
     loading: boolean;
     onSubmit: (property: NewProperty) => Promise<void>
     onCancel?: () => void;
-    formRef?: React.RefObject<HTMLDivElement>;
+    formRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 const PropertyForm = ({

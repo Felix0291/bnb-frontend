@@ -1,78 +1,9 @@
-// import { useEffect, useState } from 'react';
-// import PropertyService from '../services/PropertyService';
-// import { Link, useParams } from 'react-router-dom';
 
-// interface Property {
-//     id: string;
-//     name: string;
-//     description?: string;
-//     location: string;
-//     pricePerNight: number;
-//     availability?: boolean;
-//     imgUrl?: string;
-//     user_id?: string;
-//     listing_agent_id?: string;
-//     created_at?: string;
-//     updated_at?: string;
-// }
-
-// const PropertyDetails = () => {
-//     const { id } = useParams<{ id: string }>()
-//     const [propertyById, setPropertyById] = useState<Property | null>(null)
-
-//     useEffect(() => {
-//         const fetchProperties = async () => {
-//             if (!id) return;
-//             try {
-//                 const data = await PropertyService.getPropertiesById(id);
-//                 setPropertyById(data);
-//             } catch (error) {
-//                 console.error("Failed to fetch prperties", error)
-//             }
-//         }
-//         fetchProperties();
-//     }, [id])
-
-//     return (
-//         <div>
-//             {/* <h1 className="fixed top-20 left-0 w-full text-3xl font-bold text-center" >Propertydetails:</h1> */}
-
-//             <div>
-
-//                 {propertyById && (
-
-//                     <div className=" w-full" key={propertyById.id}>
-
-//                         <div>
-//                             <h2 className='-ml-[1px] flex-1 space y-4 mt-10 text-left text-xl font-bold'>{propertyById.name}</h2>
-//                             <img className="w-[900px] rounded-xl" src={propertyById.imgUrl} alt={propertyById.name} />
-//                         </div>
-
-//                         <div className=' -ml-[1px] flex-1 space y-4 mt-10 text-left'>
-//                             <h2 className='text-xl font-bold'>{propertyById.location}</h2>
-//                             <p>{propertyById.description}</p>
-//                             <p className="">{propertyById.pricePerNight} SEK / Kväll</p>
-//                         </div>
-
-//                         <Link to="/booking" state={{ propertyId: propertyById.id }}>
-//                             <button className='ml-[600px] -mt-[200px] text-white'>Boka nu!</button>
-//                         </Link>
-
-//                     </div>
-
-//                 )}
-//             </div>
-
-//         </div>
-//     )
-// }
-
-// export default PropertyDetails;
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import PropertyService from '../services/PropertyService';
+import PropertyService from '../services/propertyService';
 import bookingService from '../services/bookingService';
 
 interface Property {
@@ -164,32 +95,31 @@ const PropertyDetails = () => {
 
     return (
         <div className='fixed top-20 left-0 w-full min-h-screen bg-gray-50'>
-            <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
-                <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+            <div className='max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+            <div className='grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-10'>
                     {/* Vänster kolumn - Property Details */}
-                    <div className='space-y-6'>
+                    <div className='space-y-6 bg-white rounded-xl shadow-lg p-6'>
                         <div>
-                            <h1 className='text-3xl font-bold mb-2'>{propertyById.name}</h1>
-                            <p className='text-lg text-gray-600'>{propertyById.location}</p>
+                            <h1 className='text-xl font-bold mb-2'>{propertyById.name}</h1>
+                            
                         </div>
 
                         {propertyById.imgUrl && (
                             <img 
-                                className="w-full h-[500px] object-cover rounded-xl shadow-lg" 
+                                className="w-full h-[200px] object-cover rounded-xl shadow-lg" 
                                 src={propertyById.imgUrl} 
                                 alt={propertyById.name} 
                             />
                         )}
-
-                        <div className='bg-white rounded-xl shadow-sm p-6'>
-                            <h2 className='text-xl font-bold mb-4'>Om boendet</h2>
+                        <p className='text-lg text-gray-600'>{propertyById.location}</p>
+                           
                             <p className='text-gray-700 leading-relaxed'>{propertyById.description || 'Ingen beskrivning tillgänglig.'}</p>
-                        </div>
+                      
 
-                        <div className='bg-white rounded-xl shadow-sm p-6'>
-                            <h2 className='text-xl font-bold mb-4'>Prisinformation</h2>
-                            <p className='text-2xl font-semibold'>{propertyById.pricePerNight.toLocaleString('sv-SE')} SEK / Kväll</p>
-                        </div>
+                       
+                            <h2 className='text-l font-bold mb-4'>Prisinformation</h2>
+                            <p className='text-m font-semibold'>{propertyById.pricePerNight.toLocaleString('sv-SE')} SEK / Kväll</p>
+                        
                     </div>
 
                     {/* Höger kolumn - Booking Form */}
@@ -205,7 +135,7 @@ const PropertyDetails = () => {
                                         value={checkIn}
                                         onChange={(e) => setCheckIn(e.target.value)}
                                         min={new Date().toISOString().split("T")[0]}
-                                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent' 
+                                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent' 
                                     />
                                 </div>
                                 <div>
