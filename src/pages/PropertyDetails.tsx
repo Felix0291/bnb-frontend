@@ -94,13 +94,12 @@ const PropertyDetails = () => {
     }
 
     return (
-        <div className='fixed top-20 left-0 w-full min-h-screen bg-gray-50'>
-            <div className='max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+        <div className='relative top-20 left-0 w-full min-h-screen bg-gray-50'>
+            <div className=' mx-auto px-4 sm:px-6 lg:px-8 py-8'>
             <div className='grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-10'>
-                    {/* Vänster kolumn - Property Details */}
                     <div className='space-y-6 bg-white rounded-xl shadow-lg p-6'>
                         <div>
-                            <h1 className='text-xl font-bold mb-2'>{propertyById.name}</h1>
+                            <h1 className='text-lg font-bold mb-2'>{propertyById.name}</h1>
                             
                         </div>
 
@@ -111,7 +110,7 @@ const PropertyDetails = () => {
                                 alt={propertyById.name} 
                             />
                         )}
-                        <p className='text-lg text-gray-600'>{propertyById.location}</p>
+                        <p className='text-lg text-gray-600 border-gray-200 border-b-2 pb-2'>{propertyById.location}</p>
                            
                             <p className='text-gray-700 leading-relaxed'>{propertyById.description || 'Ingen beskrivning tillgänglig.'}</p>
                       
@@ -135,7 +134,7 @@ const PropertyDetails = () => {
                                         value={checkIn}
                                         onChange={(e) => setCheckIn(e.target.value)}
                                         min={new Date().toISOString().split("T")[0]}
-                                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent' 
+                                        className='w-full px-4 py-3 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-white focus:border-transparent' 
                                     />
                                 </div>
                                 <div>
@@ -145,7 +144,7 @@ const PropertyDetails = () => {
                                         value={checkOut}
                                         onChange={(e) => setCheckOut(e.target.value)}
                                         min={checkIn || new Date().toISOString().split("T")[0]}
-                                        className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent'
+                                        className='w-full px-4 py-3 border border-gray-300 bg bg-white rounded-lg focus:ring-2 focus:ring-black focus:border-transparent'
                                     />
                                 </div>
                             </div>
