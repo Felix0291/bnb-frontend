@@ -13,19 +13,19 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        
-        <Header />
-       
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/mypage" element={<MyPage />}/>
-          <Route path='/login' element={<Login />}/>
-          <Route path='/propertydetails/:id' element={<PropertyDetails />}/>
-        </Routes>
-        
-        <Footer />
-
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-grow">
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/mypage" element={<MyPage />}/>
+              <Route path='/login' element={<Login />}/>
+              <Route path='/propertydetails/:id' element={<PropertyDetails />}/>
+            </Routes>
+          </main>
+          <Footer />
+        </div>
       </AuthProvider>
     </BrowserRouter>
   )

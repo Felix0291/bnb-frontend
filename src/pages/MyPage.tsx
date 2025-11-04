@@ -158,23 +158,22 @@ const MyPage = () => {
     }
 
     return (
-        <div className="p-8">
+        <div className="p-8 pt-20">
             <div className="flex justify-between items-center mb-4">
-                <h1>Min sida</h1>
+                <h1 className="text-3xl font-bold">Min sida</h1>
+                <button
+                    onClick={() => {
+                        logout();
+                        navigate("/");
+                    }}
+                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                >
+                    Logga ut
+                </button>
             </div>
             
             <h3 className="text-start text-gray-600 mb-4">Välkommen: {user?.name}</h3>
             
-            <button
-                onClick={() => {
-                    logout();
-                    navigate("/");
-                }}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition mb-6"
-            >
-                Logga ut
-            </button>
-
             {/* Error messages */}
             {(propertiesError || errorBookings) && (
                 <div className="max-w-md mx-auto mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
