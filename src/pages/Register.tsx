@@ -17,7 +17,7 @@ const Register = () => {
         setError("")
 
         try {
-            const response = await authService.registerUser(email, name, password);
+            const response = await authService.registerUser(email, password, name);
 
             if (!response.ok) {
                 const errorData = await response.json();
