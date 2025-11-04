@@ -79,7 +79,7 @@ const PropertyForm = ({
     };
 
     return (
-        <div ref={formRef} className="max-w-lg mx-autho bg-white p-6 rounded-sm">
+        <div ref={formRef} className="max-w-lg mx-auto bg-white p-6 rounded-sm shadow-md">
             <h2 className="text-l font-semibold mb-4">
                 {isEditMode? "Redigera egnendom" : "Skapa ny egendom"}
             </h2>
@@ -159,7 +159,7 @@ const PropertyForm = ({
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
                         >
                              {loading
                         ? isEditMode
