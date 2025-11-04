@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import PropertyService from '../services/propertyService';
 import bookingService from '../services/bookingService';
+import { NewBooking } from '../types/booking';
 
 interface Property {
     id: string;
@@ -94,7 +95,7 @@ const PropertyDetails = () => {
     }
 
     return (
-        <div className='relative top-20 left-0 w-full min-h-screen bg-gray-50'>
+        <div className='relative top-20 left-0 w-full min-h-screen'>
             <div className=' mx-auto px-4 sm:px-6 lg:px-8 py-8'>
             <div className='grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-10'>
                     <div className='space-y-6 bg-white rounded-xl shadow-lg p-6'>

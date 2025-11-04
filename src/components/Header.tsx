@@ -3,10 +3,6 @@ import OpenHouseImg from "../assets/openHouseImg.png"
 import { Link } from "react-router-dom";
 import UserMenu from "./UserMenu";
 
-
-
-
-
 const Header = () => {
     return (
 

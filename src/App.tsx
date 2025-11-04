@@ -13,7 +13,9 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        
         <Header />
+       
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path="/register" element={<Register />} />
@@ -21,7 +23,9 @@ function App() {
           <Route path='/login' element={<Login />}/>
           <Route path='/propertydetails/:id' element={<PropertyDetails />}/>
         </Routes>
+        
         <Footer />
+
       </AuthProvider>
     </BrowserRouter>
   )
