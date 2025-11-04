@@ -5,7 +5,6 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import PropertyService from '../services/propertyService';
 import bookingService from '../services/bookingService';
-import { NewBooking } from '../types/booking';
 
 interface Property {
     id: string;
