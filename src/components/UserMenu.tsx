@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 
 const UserMenu = () => {
-    const { isAuthenticated} = useAuth();
+    const { isAuthenticated } = useAuth();
 
         if (isAuthenticated) {
             return(
