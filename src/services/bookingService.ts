@@ -17,6 +17,7 @@ class BookingService {
         };
     }
 
+    //Hämta alla bokningar
     async getAllBookings() {
         const url = `${this.bookingUrl}`;
         const response = await fetch(url, {
@@ -32,6 +33,7 @@ class BookingService {
         return response.json()
     }
 
+    //Hämta en specifik bokning
     async getBookingById(id: string) {
         const url = `${this.bookingUrl}/${id}`
         const response = await fetch(url, {
@@ -47,6 +49,7 @@ class BookingService {
         return response.json()
     }
 
+    //Hämta alla bokningar på en användare
     async getBookingsByUserId(userId: string) {
         const url = `${this.bookingUrl}?user_id=${userId}`
         const response = await fetch(url, {
@@ -63,6 +66,7 @@ class BookingService {
         return data;
     }
 
+    //Skapa en ny bokning
     async createBooking(booking: NewBooking) {
         const url = `${this.bookingUrl}`;
         const response = await fetch(url, {
@@ -83,6 +87,7 @@ class BookingService {
         return response.json()
     }
 
+    //Uppdatera en bokning
     async updateBooking(booking: Booking) {
         const url = `${this.bookingUrl}/${booking.id}`
         const response = await fetch(url, {
@@ -98,6 +103,7 @@ class BookingService {
         return response.json()
     }
 
+    //Ta bort en bokning
     async deleteBooking(id: string) {
         const url = `${this.bookingUrl}/${id}`;
         const response = await fetch(url, {

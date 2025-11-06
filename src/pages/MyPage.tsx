@@ -139,7 +139,7 @@ const MyPage = () => {
         }
     };
 
-    // Check authentication
+    //Om användaren inte är inloggad, visa en meddelande
     if (!isAuthenticated) {
         return (
             <div className="p-8">

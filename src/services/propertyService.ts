@@ -101,6 +101,7 @@ class PropertyService {
         return response.json()
     }
 
+    //Ta bort ett property
     async deleteProperty(id: string) {
         const url = `${this.propertyUrl}/${id}`
         const response = await fetch(url, {

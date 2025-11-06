@@ -10,6 +10,7 @@ class AuthService {
         this.userUrl = `${this.baseUrl}/users`
     }
 
+    //Hämta autentiseringsh
     private getAuthHeaders() {
         const token = localStorage.getItem("access_token");
         return {
@@ -18,6 +19,7 @@ class AuthService {
         };
     }
 
+    //Logga in en användare
     async login(email: string, password: string) {
         let url = `${this.authUrl}/login`
         return await fetch(url, {
@@ -30,6 +32,7 @@ class AuthService {
         })
     }
 
+    //Registrera en ny användare
     async registerUser(email: string, password: string, name?: string) {
         let url = `${this.authUrl}/register`
         return await fetch(url, {
@@ -42,6 +45,7 @@ class AuthService {
         })
     }
     
+    //Hämta en användare
     async getUser() {
         const token = localStorage.getItem("access_token");
         
